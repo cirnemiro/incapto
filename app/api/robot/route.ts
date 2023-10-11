@@ -22,7 +22,7 @@ const moveRobot = (commands:string) => {
         coordinates = changeDirection(coordinates,commands[index]);
         break;
       default:
-        NextResponse.json({ error: 'invalid direction' }, { status: 400 })
+        NextResponse.json({ error: 'invalid direction' }, { status: 500 })
         break;
     }
   }
@@ -62,12 +62,12 @@ const move = (coordinates:ICoordinates) => {
       return coordinates
 
     default:
-      NextResponse.json({ error: "invalid direction" }, { status: 400 })
+      NextResponse.json({ error: "invalid direction" }, { status: 500 })
       return coordinates
   }
 }
 
-const changeDirection = (coordinates:any,newDirection:string) =>{
+const changeDirection = (coordinates:ICoordinates,newDirection:string) =>{
 
   switch (newDirection) {
     case "R":
@@ -86,6 +86,8 @@ const changeDirection = (coordinates:any,newDirection:string) =>{
           return coordinates
        
         default:
+          return coordinates
+          NextResponse.json({ error: 'invalid direction' }, { status: 500 })
           break;
       }
       case "L":
@@ -107,12 +109,14 @@ const changeDirection = (coordinates:any,newDirection:string) =>{
             return coordinates
             break;
           default:
+            NextResponse.json({ error: 'invalid direction' }, { status: 500 })
+          return coordinates
             break;
         }
       break;
     
     default:
-      NextResponse.json({ error: 'invalid direction' }, { status: 400 })
+      NextResponse.json({ error: 'invalid direction' }, { status: 500 })
       return coordinates
   }
 }
@@ -128,7 +132,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       const finalPosition = moveRobot(body.comands)
       return NextResponse.json({ final_position: `${finalPosition.position[0]}:${finalPosition.position[1]}:${finalPosition.direction}` });
     }else{
-      return NextResponse.json({ error: 'no commands' }, { status: 400 })
+      return NextResponse.json({ error: 'malformated input' }, { status: 400 })
     }
 
 
