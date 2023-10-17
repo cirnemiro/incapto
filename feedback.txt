@@ -1,0 +1,21 @@
+En este archivo se pondrá el feedback general, además de los comentarios añadidos en el código con el flag [FEEDBACK]({feedback_type})
+
+Mejoras:
+1- No hay documentación del endpoint
+2- Se podría haber usado un type predefinido para los posibles valores de la dirección y así tener mejor control
+3- Las funciones auxiliares deberían ser posteriores al código de ejecución del endpoint
+4- No hay testing
+
+Errores:
+1- Se ha dejado todo el default de next
+2- Da error si se manda un string vacío en lugar de devolver simplemente la posición inicial
+3- El grid es de 11x11
+4- No hay ningun tipo de separación de responsabilidades
+5- No se han implementado modelos
+6- Se está usando el propio archivo de rutas para definir el controlador y las funciones auxiliares
+7- No es escalable, que pasaría si se quisiera usar un grid que no fuera cuadrado o de otro tamaño?
+
+
+
+Positivo:
+1- Los calculos de posición y dirección están bien hechos
