@@ -33,6 +33,12 @@ const move = (coordinates:ICoordinates) => {
 
   switch (coordinates.direction) {
     case "N":
+      //[FEEDBACK](mejora): aunque es una practica muy usada, no considero correcto user returns dentro de condicionales para parar la ejeccución
+      // en este caso el código que yo habría hecho es:
+      // 
+      //  coordrinates.postion[1] = coordinates.position[1] === 10 ? 0 : coordinates.position[1] + 1;
+      //  return coordinates;
+      //
       if (coordinates.position[1] === 10) {
         coordinates.position[1] = 0
         return coordinates
@@ -40,6 +46,14 @@ const move = (coordinates:ICoordinates) => {
       coordinates.position[1] = coordinates.position[1] + 1
       return coordinates
     case "S":
+      // FEEDBACK](mejora): se podría haber separado el código repetido en una función auxiliar, que se podría haber igualado para todos los casos
+      // mandando como parametro 1 o -1.
+      //
+      // const changePosition = (coordinates: ICoordinates, movement: number):ICoordinates => {
+      //   coordinates.position[1] = coordinates.position[1] === 10 ? 0 : coordinates.position[1] + movement;
+      //   return coordinates;
+      // }
+      //
       if (coordinates.position[1] === 0) {
         coordinates.position[1] = 10
         return coordinates
@@ -86,6 +100,7 @@ const changeDirection = (coordinates:ICoordinates,newDirection:string) =>{
           return coordinates
        
         default:
+          //[FEEDBACK](error): Error en el orden de ejecución
           return coordinates
           NextResponse.json({ error: 'invalid direction' }, { status: 500 })
           break;
@@ -124,6 +139,7 @@ const changeDirection = (coordinates:ICoordinates,newDirection:string) =>{
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const body = await req.json();
+    console.log(body)
     const allowedCharacters : RegExp = /^[MLR]+$/
     const regex = new RegExp(allowedCharacters)
 
