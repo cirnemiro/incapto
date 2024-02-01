@@ -122,7 +122,7 @@ const changeDirection = (coordinates:ICoordinates,newDirection:string) =>{
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  if (req.body) {
+  if (!req.body) {
     return NextResponse.json({ error: `provide something` }, { status: 404 })
   }
   const body = await req.json();
