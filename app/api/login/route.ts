@@ -122,22 +122,31 @@ const changeDirection = (coordinates:ICoordinates,newDirection:string) =>{
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  try {
-    const body = await req.json();
-    const allowedCharacters : RegExp = /^[MLR]+$/
-    const regex = new RegExp(allowedCharacters)
-
-    if (regex.test(body.comands)) {
-      moveRobot(body.comands)
-      const finalPosition = moveRobot(body.comands)
-      return NextResponse.json({ final_position: `${finalPosition.position[0]}:${finalPosition.position[1]}:${finalPosition.direction}` });
-    }else{
-      return NextResponse.json({ error: 'malformated input' }, { status: 400 })
-    }
-
-
-    
-  } catch (err) {
-    return NextResponse.error();
+  if (req.body) {
+    return NextResponse.json({ error: `provide something` }, { status: 404 })
   }
+  const body = await req.json();
+
+  if (body.email === "clasing@test.com" && body.password === "1234567") {
+    return NextResponse.json({ token: `K2OH2FT3W03AQHX565UR40PIEWXXJYJYTRW87GBKZKH3ER3I3L2HFYRPM6PB6TTBJY6TBLZD9IFXD5IRS0BK6MY8WKULWE5XQZEP8T08Z6GYRWXVVBU6PDIZMTCTYHF` }, { status: 200 })
+  }else{
+    return NextResponse.json({ error: `invalid credentials` }, { status: 403 })
+  }
+
+
+
+    // const body = await req.json();
+    // const allowedCharacters : RegExp = /^[MLR]+$/
+    // const regex = new RegExp(allowedCharacters)
+
+    // if (regex.test(body.comands)) {
+    //   moveRobot(body.comands)
+    //   const finalPosition = moveRobot(body.comands)
+    //   return NextResponse.json({ final_position: `${finalPosition.position[0]}:${finalPosition.position[1]}:${finalPosition.direction}` });
+    // }else{
+    //   return NextResponse.json({ error: 'malformated input' }, { status: 400 })
+    // }
+
+
+
 }
